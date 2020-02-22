@@ -2,6 +2,10 @@ package program1;
 
 import java.util.concurrent.PriorityBlockingQueue;
 
+/**
+ * Contains all processes that are to be run within the system.
+ * Is a shared resource so mutual exclusion must be practiced.
+ */
 public class ProcessQueue {
 	/**
 	 * Queue to handle processes.
