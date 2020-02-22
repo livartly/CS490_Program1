@@ -1,5 +1,8 @@
 package program1;
 
+/**
+ * Handles process identification and other items of a given process.
+ */
 public class Node {
 	/**
 	 * The id for the process.
