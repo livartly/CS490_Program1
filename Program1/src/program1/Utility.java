@@ -12,10 +12,30 @@ public class Utility {
 	 * Returns a string representing the current time, accurate to the nanosecond.
 	 * (Nanosecond accuracy is restrained by the system.)
 	 *
-	 * @return a string in the format of MM/dd/YYYY HH:mm:ss:nn (nn = nanoseconds)
+	 * @return a string formatted using {@link #formatDateTime(LocalDateTime datetime)}
+	 * @see #formatDateTime(LocalDateTime datetime)
 	 */
-	public static String getCurrentTime () {
-		return LocalDateTime.now().format( DateTimeFormatter.ofPattern( "MM/dd/uuuu HH:mm:ss:nn" ) );
+	public static String getCurrentTimeFormatted () {
+		return formatDateTime( getCurrentTime() );
+	}
+
+	/**
+	 * Gets the current local datetime.
+	 *
+	 * @return The current local datetime.
+	 */
+	public static LocalDateTime getCurrentTime () {
+		return LocalDateTime.now();
+	}
+
+	/**
+	 * Formats the given date time as of MM/dd/YYYY HH:mm:ss:nn (nn = nanoseconds).
+	 *
+	 * @param dateTime the datetime to format.
+	 * @return a string with the described format.
+	 */
+	public static String formatDateTime ( LocalDateTime dateTime ) {
+		return dateTime.format( DateTimeFormatter.ofPattern( "MM/dd/uuuu HH:mm:ss:nn" ) );
 	}
 
 	/**
