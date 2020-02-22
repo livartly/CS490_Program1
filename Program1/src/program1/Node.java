@@ -10,10 +10,12 @@ public class Node {
 	 * The id for the process.
 	 */
 	private int processId;
+
 	/**
 	 * The priority for this process.
 	 */
 	private int priority;
+
 	/**
 	 * How much time (milliseconds) is allotted for this process to be in the running state.
 	 */
@@ -100,7 +102,10 @@ public class Node {
 	 * @return a string containing information about the node.
 	 */
 	public String toString () {
-		return String.format( "Process %d with priority %d, started %s", this.getProcessId(), this.getPriority(), Utility.formatDateTime( this.executionStart ) );
+		return String.format( "Process %d with priority %d, started %s",
+				this.getProcessId(),
+				this.getPriority(),
+				Utility.formatDateTime( this.executionStart ) );
 	}
 
 	/**
