@@ -27,21 +27,24 @@ public class Node {
 	private LocalDateTime executionStart;
 
 	/**
+	 * The id for the node that was created immediately before this one.
+	 */
+	private static int lastId = 0;
+
+	public Node ( int priority, int timeSlice ) {
+		this.priority = priority;
+		this.timeSlice = timeSlice;
+
+		this.processId = ++ lastId;
+	}
+
+	/**
 	 * Gets the process id for this node.
 	 *
 	 * @return the process id.
 	 */
 	public int getProcessId () {
 		return processId;
-	}
-
-	/**
-	 * Sets the process id for this node.
-	 *
-	 * @param processId The new process id.
-	 */
-	public void setProcessId ( int processId ) {
-		this.processId = processId;
 	}
 
 	/**
