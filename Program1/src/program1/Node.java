@@ -1,5 +1,7 @@
 package program1;
 
+import java.time.LocalDateTime;
+
 /**
  * Handles process identification and other items of a given process.
  */
@@ -18,9 +20,9 @@ public class Node {
 	private int timeSlice;
 
 	/**
-	 * The timestamp (in milliseconds) of when the node began execution.
+	 * The start time of when the node began execution.
 	 */
-	private long executionStart;
+	private LocalDateTime executionStart;
 
 	/**
 	 * Gets the process id for this node.
@@ -77,20 +79,36 @@ public class Node {
 	}
 
 	/**
-	 * Gets the start time in milliseconds of the node's execution.
+	 * Gets the start time of the node's execution.
 	 *
-	 * @return The start time in milliseconds of the node's execution.
+	 * @return The start time of the node's execution.
 	 */
-	public long getExecutionStart () {
+	public LocalDateTime getExecutionStart () {
 		return executionStart;
 	}
 
 	/**
 	 * Sets the node's start time to the given value.
 	 *
-	 * @param executionStart new start time in milliseconds.
+	 * @param executionStart the new start time.
 	 */
-	public void setExecutionStart ( long executionStart ) {
+	public void setExecutionStart ( LocalDateTime executionStart ) {
 		this.executionStart = executionStart;
+	}
+
+	/**
+	 * @return a string containing information about the node.
+	 */
+	public String toString () {
+		return String.format( "Process %d with priority %d, started %s", this.getProcessId(), this.getPriority(), Utility.formatDateTime( this.executionStart ) );
+	}
+
+	/**
+	 * Runs the node's main operation for its given time slice.
+	 *
+	 * @throws InterruptedException
+	 */
+	public void run () throws InterruptedException {
+		Thread.sleep( this.timeSlice );
 	}
 }
