@@ -18,6 +18,11 @@ public class Node {
 	private int timeSlice;
 
 	/**
+	 * The timestamp (in milliseconds) of when the node began execution.
+	 */
+	private long executionStart;
+
+	/**
 	 * Gets the process id for this node.
 	 *
 	 * @return the process id.
@@ -69,5 +74,23 @@ public class Node {
 	 */
 	public void setTimeSlice ( int timeSlice ) {
 		this.timeSlice = timeSlice;
+	}
+
+	/**
+	 * Gets the start time in milliseconds of the node's execution.
+	 *
+	 * @return The start time in milliseconds of the node's execution.
+	 */
+	public long getExecutionStart () {
+		return executionStart;
+	}
+
+	/**
+	 * Sets the node's start time to the given value.
+	 *
+	 * @param executionStart new start time in milliseconds.
+	 */
+	public void setExecutionStart ( long executionStart ) {
+		this.executionStart = executionStart;
 	}
 }
