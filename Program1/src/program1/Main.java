@@ -10,13 +10,11 @@ public class Main {
 		System.out.println( "Hello World!" );
 
 		// Create new process queue
-		ProcessQueue queue = new ProcessQueue(75);
+		ProcessQueue queue = new ProcessQueue( 75 );
 
 		// Create two consumer threads
-		ConsumerThread consume1 = new ConsumerThread();
-		ConsumerThread consume2 = new ConsumerThread();
-
-		// Pass process queue to consumers
+		ConsumerThread consume1 = new ConsumerThread( queue );
+		ConsumerThread consume2 = new ConsumerThread( queue );
 
 		// Create producer thread
 		ProducerThread producer = new ProducerThread();
