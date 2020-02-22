@@ -90,4 +90,8 @@ public class ProcessQueue {
 	public int size () {
 		return this.queue.size();
 	}
+
+	public boolean isEmpty () {
+		return this.size() == 0;
+	}
 }

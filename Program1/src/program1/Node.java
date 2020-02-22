@@ -102,7 +102,7 @@ public class Node {
 	 * @return a string containing information about the node.
 	 */
 	public String toString () {
-		return String.format( "Process %d with priority %d, started %s",
+		return String.format( "Process: ID %d with priority %d (started %s)",
 				this.getProcessId(),
 				this.getPriority(),
 				Utility.formatDateTime( this.executionStart ) );
@@ -114,6 +114,7 @@ public class Node {
 	 * @throws InterruptedException
 	 */
 	public void run () throws InterruptedException {
+		this.setExecutionStart( Utility.getCurrentTime() );
 		Thread.sleep( this.timeSlice );
 	}
 }
