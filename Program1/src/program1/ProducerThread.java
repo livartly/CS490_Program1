@@ -8,6 +8,7 @@ public class ProducerThread implements Runnable {
      * The maximum number of nodes to produce.
      */
     private final int MAX_NUM_OF_NODES_TO_PRODUCE = 75;
+    private final int IDLE_TIME_IN_MILLISECONDS = 66;
     /**
      * The counter for the amount of nodes created.
      */
@@ -75,12 +76,29 @@ public class ProducerThread implements Runnable {
         return possibility;
     }
 
+    private void idle () {
+        try {
+            Thread.sleep( IDLE_TIME_IN_MILLISECONDS );
+        } catch ( InterruptedException e ) {
+            System.out.println( "Producer was interrupted!" );
+        }
+    }
+
     @Override
     public void run () {
 
         while ( ! isFinished() ) {
-
+            int nodesToProduce = getRandomNumOfNodesToProduce();
+            for ( int i = 0; i < nodesToProduce; i++ ) {
+                Node producedNode = createNode();
+                this.processQueue.add( producedNode );
+            }
+            System.out.println( String.format( "Producer has produced ~%d nodes.", nodesToProduce ) );
+            System.out.println( "Producer is idling..." );
+            idle();
         }
 
+        System.out.println( "Producer has completed its tasks." );
+        // TODO: Notify everyone when done.
     }
 }

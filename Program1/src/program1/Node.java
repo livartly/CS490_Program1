@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * Handles process identification and other items of a given process.
  */
-public class Node {
+public class Node implements Comparable {
 	/**
 	 * The id for the process.
 	 */
@@ -119,5 +119,14 @@ public class Node {
 	public void run () throws InterruptedException {
 		this.setExecutionStart( Utility.getCurrentTime() );
 		Thread.sleep( this.timeSlice );
+	}
+
+	@Override
+	public int compareTo ( Object o ) {
+		if ( o instanceof Node ) {
+			Node other = ( Node ) o;
+			return Integer.compare( this.getPriority(), other.getPriority() );
+		}
+		return - 1;
 	}
 }
