@@ -34,14 +34,14 @@ public class ProducerThread {
     /**
      * Creates new instance of node.
      * Generates random numbers to set priority, process id, and time slice
-     *
+     * @return the created node.
      */
-    public int createNode () {
+    public Node createNode () {
         Node node = new Node();
         node.setPriority(Utility.getRandomNumber(1,1000));
         node.setProcessId(Utility.getRandomNumber(1,1000));
         node.setTimeSlice(Utility.getRandomNumber(1,1000));
         nodeCount++;
-        return 0;
+        return node;
     }
 }

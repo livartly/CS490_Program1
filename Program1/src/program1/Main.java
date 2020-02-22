@@ -8,5 +8,18 @@ public class Main {
 
 	public static void main ( String[] args ) {
 		System.out.println( "Hello World!" );
+
+		// Create new process queue
+		ProcessQueue queue = new ProcessQueue(75);
+
+		// Create two consumer threads
+		ConsumerThread consume1 = new ConsumerThread();
+		ConsumerThread consume2 = new ConsumerThread();
+
+		// Pass process queue to consumers
+
+		// Create producer thread
+		ProducerThread producer = new ProducerThread();
 	}
+
 }
