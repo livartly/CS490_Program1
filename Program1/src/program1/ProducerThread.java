@@ -91,7 +91,7 @@ public class ProducerThread implements Runnable {
      * @return a clamped random number of nodes to produce.
      */
     private int getRandomNumOfNodesToProduce () {
-        int possibility = Utility.getRandomNumber( 15, this.MAX_NUM_OF_NODES_TO_PRODUCE / 4 );
+        int possibility = Utility.getRandomNumber( 8, this.MAX_NUM_OF_NODES_TO_PRODUCE / 4 );
         int remainingCount = getRemainingNodesToProduce();
         if ( possibility > remainingCount ) {
             possibility = remainingCount;
