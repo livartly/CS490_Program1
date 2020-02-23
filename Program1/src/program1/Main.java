@@ -7,8 +7,6 @@ package program1;
 public class Main {
 
 	public static void main ( String[] args ) {
-		System.out.println( "Hello World!" );
-
 		// Create new process queue
 		ProcessQueue queue = new ProcessQueue( 75 );
 
