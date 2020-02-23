@@ -101,7 +101,7 @@ public class ConsumerThread implements Runnable {
 	 */
 	private void idle () {
 		try {
-			System.out.println( String.format( "Consumer %d is idle...", this.getId() ) );
+			report( "is idling..." );
 			Thread.sleep( IDLE_WAIT_IN_MILLISECONDS );
 		} catch ( InterruptedException e ) {
 			report( "was interrupted." );
