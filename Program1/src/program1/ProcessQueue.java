@@ -92,6 +92,9 @@ public class ProcessQueue {
 		return this.queue.size();
 	}
 
+	/**
+	 * @return True if the container has nothing in it, false otherwise.
+	 */
 	public boolean isEmpty () {
 		return this.size() == 0;
 	}

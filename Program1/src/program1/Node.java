@@ -31,6 +31,12 @@ public class Node implements Comparable {
 	 */
 	private static int lastId = 0;
 
+	/**
+	 * Constructs the node with the given priority and execution time.
+	 *
+	 * @param priority  the priority of the modeled process.
+	 * @param timeSlice The time slice of the process to execute in.
+	 */
 	public Node ( int priority, int timeSlice ) {
 		this.priority = priority;
 		this.timeSlice = timeSlice;
