@@ -41,14 +41,20 @@ public class ConsumerThread implements Runnable {
 	private String tabsPrepend;
 
 	/**
+	 * Communicates flags between threads.
+	 */
+	private FlagCommunicator flags;
+
+	/**
 	 * Creates a Consumer Thread with the given shared queue.
 	 *
 	 * @param queue The queue to share with all other threads.
 	 */
-	public ConsumerThread ( ProcessQueue queue ) {
+	public ConsumerThread ( ProcessQueue queue, FlagCommunicator fc ) {
 		this.processQueue = queue;
 		this.id = ++ lastId;
 		this.isRunning = false;
+		this.flags = fc;
 
 		StringBuilder sb = new StringBuilder();
 		for ( int i = 0; i < this.id; i++ ) {
@@ -85,6 +91,13 @@ public class ConsumerThread implements Runnable {
 			report( "was interrupted." );
 			return null;
 		}
+	}
+
+	/**
+	 * @return the flags shared between threads.
+	 */
+	public FlagCommunicator getFlags () {
+		return flags;
 	}
 
 	/**

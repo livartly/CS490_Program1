@@ -10,9 +10,11 @@ public class Main {
 		// Create new process queue
 		ProcessQueue queue = new ProcessQueue( 75 );
 
+		FlagCommunicator flags = new FlagCommunicator();
+
 		// Create two consumer threads
-		ConsumerThread consume1 = new ConsumerThread( queue );
-		ConsumerThread consume2 = new ConsumerThread( queue );
+		ConsumerThread consume1 = new ConsumerThread( queue, flags );
+		ConsumerThread consume2 = new ConsumerThread( queue, flags );
 
 		// Create producer thread
 		ProducerThread producer = new ProducerThread( queue );

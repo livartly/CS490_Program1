@@ -26,15 +26,31 @@ public class ProducerThread implements Runnable {
     private ProcessQueue processQueue;
 
     /**
+     * Communicates the flags between producer and consumer threads.
+     */
+    private FlagCommunicator flags;
+
+    /**
      * Creates a new producer thread with the given shared resource.
      *
      * @param processQueue The queue that holds all processes to add to.
+     * @param fc           The way for threads to communicate the flags they share.
      */
-    public ProducerThread ( ProcessQueue processQueue ) {
+    public ProducerThread ( ProcessQueue processQueue, FlagCommunicator fc ) {
         this.processQueue = processQueue;
+        this.flags = fc;
 
         this.wakeUpCount = 0;
         this.nodeCount = 0;
+
+
+    }
+
+    /**
+     * @return The flags that threads use to communicate between each other.
+     */
+    public FlagCommunicator getFlags () {
+        return flags;
     }
 
     /**
