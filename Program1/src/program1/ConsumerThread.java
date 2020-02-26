@@ -80,9 +80,18 @@ public class ConsumerThread implements Runnable {
 	 */
 	public Node requestNode () {
 		report( "is requesting a new node." );
+
 		while ( this.processQueue.isEmpty() ) {
+
 			report( "cannot find new node." );
-			idle();
+
+			if ( flags.isProducerIsDone() ) {
+				report( "thinks there won't be any more nodes to request." );
+				this.isRunning = false;
+				return null;
+			} else {
+				idle();
+			}
 		}
 
 		try {
@@ -131,6 +140,10 @@ public class ConsumerThread implements Runnable {
 			try {
 				Node nodeToProcess = this.requestNode();
 
+				if ( nodeToProcess == null ) {
+					continue;
+				}
+
 				nodeToProcess.run();
 
 				LocalDateTime finishedProcessingTime = Utility.getCurrentTime();
@@ -143,6 +156,8 @@ public class ConsumerThread implements Runnable {
 				report( "was interrupted." );
 			}
 		}
+
+		report( "is done." );
 
 	}
 }

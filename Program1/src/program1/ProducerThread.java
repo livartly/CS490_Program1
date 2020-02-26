@@ -144,6 +144,7 @@ public class ProducerThread implements Runnable {
         }
 
         System.out.println( "Producer has completed its tasks." );
-        // TODO: Notify everyone when done.
+        // Notify consumers that producer has finished.
+        flags.setProducerIsDone( true );
     }
 }

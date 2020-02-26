@@ -17,7 +17,7 @@ public class Main {
 		ConsumerThread consume2 = new ConsumerThread( queue, flags );
 
 		// Create producer thread
-		ProducerThread producer = new ProducerThread( queue );
+		ProducerThread producer = new ProducerThread( queue, flags );
 
 		new Thread( consume1 ).start();
 		new Thread( consume2 ).start();
