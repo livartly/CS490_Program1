@@ -46,15 +46,22 @@ public class ConsumerThread implements Runnable {
 	private FlagCommunicator flags;
 
 	/**
+	 * The total number of nodes consumed by this consumer.
+	 */
+	private int totalConsumed;
+
+	/**
 	 * Creates a Consumer Thread with the given shared queue.
 	 *
 	 * @param queue The queue to share with all other threads.
+	 * @param fc    The flags that are to be communicated between threads.
 	 */
 	public ConsumerThread ( ProcessQueue queue, FlagCommunicator fc ) {
 		this.processQueue = queue;
 		this.id = ++ lastId;
-		this.isRunning = false;
 		this.flags = fc;
+		this.totalConsumed = 0;
+		this.isRunning = false;
 
 		StringBuilder sb = new StringBuilder();
 		for ( int i = 0; i < this.id; i++ ) {
@@ -71,6 +78,13 @@ public class ConsumerThread implements Runnable {
 	 */
 	public int getId () {
 		return id;
+	}
+
+	/**
+	 * @return the total number of nodes consumed by this consumer.
+	 */
+	public int getTotalConsumed () {
+		return totalConsumed;
 	}
 
 	/**
@@ -152,12 +166,15 @@ public class ConsumerThread implements Runnable {
 
 				report( String.format( "finished %s at %s", nodeStatistics, Utility.formatDateTime( finishedProcessingTime ) ) );
 
+				this.totalConsumed++;
+
 			} catch ( InterruptedException ex ) {
 				report( "was interrupted." );
 			}
 		}
 
 		report( "is done." );
+		report( String.format( "consumed %d nodes.", this.totalConsumed ) );
 
 	}
 }

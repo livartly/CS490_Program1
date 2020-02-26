@@ -19,10 +19,26 @@ public class Main {
 		// Create producer thread
 		ProducerThread producer = new ProducerThread( queue, flags );
 
-		new Thread( consume1 ).start();
-		new Thread( consume2 ).start();
+		Thread consumer1 = new Thread( consume1 );
+		Thread consumer2 = new Thread( consume2 );
 
-		new Thread( producer ).start();
+		consumer1.start();
+		consumer2.start();
+
+		Thread producerThread = new Thread( producer );
+
+		producerThread.start();
+
+		try {
+			producerThread.join();
+			consumer1.join();
+			consumer2.join();
+		} catch ( InterruptedException ex ) {
+			System.out.println( "Threads were interrupted while joining!" );
+		}
+
+		System.out.println( String.format( "Producer produced %d nodes to process.", producer.getNodeCount() ) );
+		System.out.println( String.format( "There are %d remaining nodes in the processes queue.", queue.size() ) );
 	}
 
 }

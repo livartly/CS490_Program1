@@ -138,7 +138,7 @@ public class ProducerThread implements Runnable {
                 Node producedNode = createNode();
                 this.processQueue.add( producedNode );
             }
-            System.out.println( String.format( "Producer has produced ~%d nodes.", nodesToProduce ) );
+            System.out.println( String.format( "Producer has produced ~%d new nodes.", nodesToProduce ) );
             System.out.println( "Producer is idling..." );
             idle();
         }
