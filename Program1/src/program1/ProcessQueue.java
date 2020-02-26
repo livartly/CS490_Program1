@@ -1,12 +1,11 @@
 package program1;
 
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.ArrayList;
 
 /**
  * Contains all processes that are to be run within the system.
  * Is a shared resource so mutual exclusion must be practiced.
  */
-// TODO: Make this not a wrapper.
 public class ProcessQueue {
 	/**
 	 * Queue to handle processes.
@@ -14,7 +13,14 @@ public class ProcessQueue {
 	 * ONLY TO BE USED FOR STARTING IMPLEMENTATION.
 	 * MEANING, THIS MUST BE REPLACED EVENTUALLY.
 	 */
-	private PriorityBlockingQueue< Node > queue;
+	//private PriorityBlockingQueue< Node > queue;
+
+	/**
+	 * Object to be used as a mutex.
+	 */
+	private final Object lock;
+
+	private ArrayList< Node > nodes;
 
 	/**
 	 * Creates the ProcessQueue with the initial capacity.
@@ -22,7 +28,40 @@ public class ProcessQueue {
 	 * @param initialCapacity The space to allocate the queue with.
 	 */
 	public ProcessQueue ( int initialCapacity ) {
-		this.queue = new PriorityBlockingQueue<>( initialCapacity );
+		//this.queue = new PriorityBlockingQueue<>( initialCapacity );
+		this.nodes = new ArrayList<>( initialCapacity );
+		this.lock = new Object();
+	}
+
+
+	private void heapify ( int n, int indexOfNode ) {
+		// https://www.geeksforgeeks.org/heap-sort/ helps a lot.
+		int indexOfSmallestNode = indexOfNode;
+		int indexOfLeftChild = 2 * indexOfNode + 1;
+		int indexOfRightChild = 2 * indexOfNode + 2;
+
+		// If left child is smaller than root
+		if ( indexOfLeftChild < n &&
+				     this.nodes.get( indexOfLeftChild ).compareTo( this.nodes.get( indexOfSmallestNode ) ) > 0 ) {
+			indexOfSmallestNode = indexOfLeftChild;
+		}
+
+		// If right child is smaller than the smallest so far,
+		if ( indexOfRightChild < n &&
+				     this.nodes.get( indexOfRightChild ).compareTo( this.nodes.get( indexOfSmallestNode ) ) > 0 ) {
+			indexOfSmallestNode = indexOfRightChild;
+		}
+
+		// If the index of the smallest node is not the root index,
+		if ( indexOfSmallestNode != indexOfNode ) {
+			// Swap them.
+			Node swap = this.nodes.get( indexOfNode );
+			this.nodes.set( indexOfNode, this.nodes.get( indexOfSmallestNode ) );
+			this.nodes.set( indexOfSmallestNode, swap );
+
+			// Recursively heapify the affected sub-tree
+			heapify( n, indexOfSmallestNode );
+		}
 	}
 
 	/**
@@ -32,45 +71,41 @@ public class ProcessQueue {
 	 * @return True if was successfully added, false otherwise.
 	 */
 	public boolean add ( Node newProcess ) {
-		return this.queue.add( newProcess );
+		boolean output = false;
+		synchronized ( this.lock ) {
+			output = this.nodes.add( newProcess );
+			// Heapify at the root.
+			this.sort();
+		}
+		return output;
 	}
 
 	/**
 	 * Removes all elements from the queue.
 	 */
 	public void clear () {
-		this.queue.clear();
+		synchronized ( this.lock ) {
+			this.nodes.clear();
+		}
 	}
 
-	/**
-	 * Checks if the queue contains the given node.
-	 *
-	 * @param n The node to check for.
-	 * @return True if the queue contains this node, false otherwise.
-	 */
-	public boolean contains ( Node n ) {
-		return this.queue.contains( n );
-	}
+	public void sort () {
+		synchronized ( this.lock ) {
+			// Build heap (rearrange array)
+			for ( int i = this.nodes.size() / 2 - 1; i >= 0; i-- )
+				heapify( this.nodes.size(), i );
 
-	/**
-	 * NOT IMPLEMENTED YET.
-	 * <p>
-	 * Checks if there is a process within the queue with the given id.
-	 *
-	 * @param processId The id of the process to check for.
-	 * @return True if there exists a process with the given id within the queue, false otherwise.
-	 */
-	public boolean contains ( int processId ) {
-		return false;
-	}
+			// One by one extract an element from heap
+			for ( int i = this.nodes.size() - 1; i >= 0; i-- ) {
+				// Move current root to end
+				Node temp = this.nodes.get( 0 );
+				this.nodes.set( 0, this.nodes.get( i ) );
+				this.nodes.set( i, temp );
 
-	/**
-	 * Returns the node at the head of the queue, but does not remove it.
-	 *
-	 * @return The node at the head of the queue.
-	 */
-	public Node peek () {
-		return this.queue.peek();
+				// call max heapify on the reduced heap
+				heapify( i, 0 );
+			}
+		}
 	}
 
 	/**
@@ -80,7 +115,11 @@ public class ProcessQueue {
 	 * @throws InterruptedException
 	 */
 	public Node removeHead () throws InterruptedException {
-		return this.queue.take();
+		synchronized ( this.lock ) {
+			Node head = this.nodes.remove( 0 );
+			this.sort();
+			return head;
+		}
 	}
 
 	/**
@@ -89,7 +128,7 @@ public class ProcessQueue {
 	 * @return the number of processes within the queue.
 	 */
 	public int size () {
-		return this.queue.size();
+		return this.nodes.size();
 	}
 
 	/**
