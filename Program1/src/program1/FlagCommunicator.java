@@ -1,5 +1,8 @@
 package program1;
 
+/**
+ * Class that holds the flags that are to be communicated between threads.
+ */
 public class FlagCommunicator {
 	/**
 	 * True if producer is done, False otherwise.

@@ -127,6 +127,12 @@ public class Node implements Comparable {
 		Thread.sleep( this.timeSlice );
 	}
 
+	/**
+	 * Used to compare between objects. If the object is a node, compares each priority.
+	 *
+	 * @param o the object to compare to.
+	 * @return -1 if o is not a node or if our priority is less than the other, 0 for equal priorities, 1 otherwise.
+	 */
 	@Override
 	public int compareTo ( Object o ) {
 		if ( o instanceof Node ) {

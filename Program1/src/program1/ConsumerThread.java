@@ -2,11 +2,6 @@ package program1;
 
 import java.time.LocalDateTime;
 
-// Consumer thread requests nodes from the process queue
-// Simulate execution by sleeping for node slice duration
-// Report node's process ID, priority value, time when completed
-// Print report to screen
-
 /**
  * Consumes tasks and allows them to execute.
  * Requests nodes from the process queue, simulates execution for each process,

@@ -4,7 +4,11 @@
 // This program simulates the creation and execution of prioritized processes
 package program1;
 
+/**
+ * The main functionality for the program.
+ */
 public class Main {
+
 
 	public static void main ( String[] args ) {
 		// Create new process queue
